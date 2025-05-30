@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_vendor_bill_wizard_form" model="ir.ui.view">
+        <field name="name">vendor.bill.wizard.form</field>
+        <field name="model">commision.bill</field>
+        <field name="arch" type="xml">
+            <form string="Vendor Bill Info">
+                <sheet>
+                    <h2>
+                        <field name="name" readonly="1" nolabel="1"/>
+                    </h2>
+                    <group>
+                        <group>
+                            <field name="amount_total" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="commission_fees" readonly="1"/>
+                            <field name="commission_amount" readonly="1"/>
+                        </group>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="create_delivery_boy_bill" string="Create Delivery Boy Bill" type="object"
+                            class="btn-primary"/>
+<!--                    <button name="create_and_view_delivery_boy_bill" string="Create &amp; View Delivery Boy Bill"-->
+<!--                            type="object" class="btn-primary"/>-->
+                    <button string="Cancel" special="cancel" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <odoo>
+        <record id="action_vendor_bill_wizard" model="ir.actions.act_window">
+            <field name="name">Create Delivery Boy Bill</field>
+            <field name="res_model">commision.bill</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_vendor_bill_wizard_form"/>
+            <field name="binding_model_id" ref="model_delivery_management"/>
+            <field name="target">new</field>
+        </record>
+
+    </odoo>
+
+</odoo>

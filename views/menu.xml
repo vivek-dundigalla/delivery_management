@@ -5,7 +5,9 @@
     <menuitem id="delivery_invoices" name="Delivery Invoices" parent="delivery_management_invoices"
               action="action_delivery_management" groups="delivery_management.group_delivery_admin"/>
     <menuitem id="delivery_assigned" name="Delivery Assigned" parent="delivery_management_invoices"
-              action="action_delivery_assigned" groups="delivery_management.group_delivery_boy" sequence="100"/>
+              action="action_delivery_assigned"
+              groups="delivery_management.group_delivery_admin,delivery_management.group_delivery_boy"
+              sequence="100"/>
     <menuitem id="delivery_onway" name="Delivery Onway" parent="delivery_management_invoices"
               action="action_delivery_onway" groups="delivery_management.group_delivery_admin" sequence="200"/>
     <menuitem id="delivery_arrived" name="Delivery Arrived" parent="delivery_management_invoices"

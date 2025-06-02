@@ -15,6 +15,7 @@
                         </group>
                         <group>
                             <field name="commission_fees" readonly="1"/>
+<!--                            <field name="commission_fees" readonly="1" widget="percentage"/>-->
                             <field name="commission_amount" readonly="1"/>
                         </group>
                     </group>
@@ -22,8 +23,8 @@
                 <footer>
                     <button name="create_delivery_boy_bill" string="Create Delivery Boy Bill" type="object"
                             class="btn-primary"/>
-<!--                    <button name="create_and_view_delivery_boy_bill" string="Create &amp; View Delivery Boy Bill"-->
-<!--                            type="object" class="btn-primary"/>-->
+                    <!--                    <button name="create_and_view_delivery_boy_bill" string="Create &amp; View Delivery Boy Bill"-->
+                    <!--                            type="object" class="btn-primary"/>-->
                     <button string="Cancel" special="cancel" class="btn-secondary"/>
                 </footer>
             </form>

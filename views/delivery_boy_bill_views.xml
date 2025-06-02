@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Tree View for Delivery Boy Bills -->
+    <record id="view_delivery_boy_bill_list" model="ir.ui.view">
+        <field name="name">delivery.boy.bill.list</field>
+        <field name="model">delivery.boy.bill</field>
+        <field name="arch" type="xml">
+            <list string="Delivery Boy Bills">
+                <field name="name"/>
+                <field name="delivery_boy_name"/>
+                <field name="bill_date"/>
+                <field name="commission_fees"/>
+                <field name="commission_amount"/>
+                <field name="amount_total"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View for Delivery Boy Bills -->
+    <record id="view_delivery_boy_bill_form" model="ir.ui.view">
+        <field name="name">delivery.boy.bill.form</field>
+        <field name="model">delivery.boy.bill</field>
+        <field name="arch" type="xml">
+            <form string="Delivery Boy Bill" create="false" delete="false">
+                <sheet>
+                    <group>
+                        <group>
+                            <group>
+                                <field name="name" readonly="1"/>
+                                <field name="delivery_boy_name" readonly="1"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="bill_date" readonly="1"/>
+                            <field name="commission_fees" readonly="1"/>
+                            <field name="commission_amount" readonly="1"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Invoice Lines">
+                            <field name="line_ids">
+                                <list editable="bottom" create="false" delete="false">
+                                    <field name="product_id" readonly="1"/>
+                                    <field name="name" readonly="1"/>
+                                    <field name="quantity" readonly="1"/>
+                                    <field name="commission_fees" readonly="1"/>
+                                    <field name="price_subtotal" readonly="1"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+
+                    <div class="oe_clearfix" style="margin-top: 15px;">
+                        <div class="float-end pe-2" style="width: 300px;">
+                            <group string="Total" class="o_form_label_right">
+                                <field name="commission_amount"
+                                       readonly="1"
+                                       string="Total"
+                                       widget="monetary"
+                                       options="{'currency_field': 'currency_id'}"
+                                       style="font-size: 20px; font-weight: bold;"/>
+                            </group>
+                        </div>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action Window for Delivery Boy Bills -->
+    <record id="action_delivery_boy_bill_list" model="ir.actions.act_window">
+        <field name="name">Delivery Boy Bills</field>
+        <field name="res_model">delivery.boy.bill</field>
+        <field name="view_mode">list,form</field>
+<!--        <field name="view_id" ref="view_delivery_boy_bill_list"/>-->
+        <field name="target">current</field>
+    </record>
+    
+</odoo>

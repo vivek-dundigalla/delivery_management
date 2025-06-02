@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_delivery_boy_bill_list" model="ir.ui.view">
+        <field name="name">delivery.boy.bill.list</field>
+        <field name="model">delivery.boy.bill</field>
+        <field name="arch" type="xml">
+            <list string="Delivery Boy Bills">
+                <field name="name" string="Bill Number"/>
+                <field name="delivery_boy_name" string="Delivery Boy Name"/>
+                <field name="bill_date" string="Bill Date"/>
+                <field name="commission_fees" string="Commission Fee (%)"/>
+                <field name="commission_amount" string="Commission Amount" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"/>
+                <field name="amount_total" string="Total Amount" widget="monetary"
+                       options="{'currency_field': 'currency_id'}"/>
+            </list>
+        </field>
+    </record>
+
+
+    <record id="view_delivery_boy_bill_form" model="ir.ui.view">
+        <field name="name">delivery.boy.bill.form</field>
+        <field name="model">delivery.boy.bill</field>
+        <field name="arch" type="xml">
+            <form string="Delivery Boy Bill" create="false" delete="false">
+                <sheet>
+                    <group>
+                        <group>
+                            <group>
+                                <field name="name" readonly="1"/>
+                                <field name="delivery_boy_name" readonly="1"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="bill_date" readonly="1"/>
+                            <field name="commission_fees" readonly="1"/>
+                            <field name="commission_amount" readonly="1"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Invoice Lines">
+                            <field name="line_ids">
+                                <list editable="bottom" create="false" delete="false">
+                                    <field name="product_id" string="Product" readonly="1"/>
+                                    <field name="name" string="Label" readonly="1"/>
+                                    <!--                                    <field name="account_id" string="Account" invisible="1" readonly="1" />-->
+                                    <field name="quantity" string="Quantity" readonly="1"/>
+                                    <field name="commission_fees" string="Commission Fee(%)" readonly="1"/>
+                                    <field name="price_subtotal" string="Subtotal" readonly="1"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+
+                    <div class="oe_clearfix" style="margin-top: 15px;">
+                        <div class="float-end pe-2" style="width: 300px;">
+                            <group string="Total" class="o_form_label_right">
+                                <field name="commission_amount"
+                                       readonly="1"
+                                       string="Total"
+                                       widget="monetary"
+                                       options="{'currency_field': 'currency_id'}"
+                                       style="font-size: 20px; font-weight: bold;"/>
+                            </group>
+                        </div>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_delivery_boy_bill" model="ir.actions.act_window">
+        <field name="name">Delivery Boy Bills</field>
+        <field name="res_model">delivery.boy.bill</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="view_delivery_boy_bill_form"/>
+        <field name="target">current</field>
+    </record>
+
+</odoo>

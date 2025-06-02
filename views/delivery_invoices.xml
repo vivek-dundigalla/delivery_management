@@ -121,21 +121,50 @@
     </record>
 
     <record id="action_delivery_arrived" model="ir.actions.act_window">
-        <field name="name">Delivery Success full</field>
+        <field name="name">Delivery Arrived</field>
         <field name="res_model">delivery.management</field>
         <field name="view_mode">list,form</field>
         <field name="view_id" ref="delivery_management.view_delivery_management_list"/>
         <field name="domain">[('delivery_state', '=', 'arrived')]</field>
     </record>
 
-
-    <record id="view_delivery_menu_search" model="ir.ui.view">
+    <record id="view_delivery_invoices_serch" model="ir.ui.view">
         <field name="name">delivery search</field>
         <field name="model">delivery.management</field>
         <field name="arch" type="xml">
-            <search string="Search Delivery Management">
+            <search string="Search Delivery Records">
                 <field name="number"/>
+                <field name="due_date"/>
+                <field name="delivery_boy"/>
+                <field name="delivery_state"/>
+                <field name="payment_state"/>
+                <field name="status"/>
+                <separator/>
+                <!-- Delivery Satatus Filters-->
+                <filter string="Invoice" name="delivery_state" domain="[('delivery_state','=','draft')]"/>
+                <filter string="Delivery Assigned" name="delivery_state" domain="[('delivery_state','=','transit')]"/>
+                <filter string="Delivery Onway" name="delivery_state" domain="[('delivery_state','=','onway')]"/>
+                <filter string="Delivery SuccessFull" name="delivery_state"
+                        domain="[('delivery_state','=','arrived')]"/>
+                <filter string="Delivery Collection" name="delivery_state"
+                        domain="[('delivery_state','=','collection')]"/>
+                <filter string="Delivery Collection" name="delivery_state"
+                        domain="[('delivery_state','=','cancel_delivery')]"/>
+                <separator/>
+
+                <!--Payment Status-->
+                <!--                <filter string="Paid" name="payment_state" domain="[('payment_state','=','paid')]"/>-->
+                <!--                <filter string="Not Paid" name="payment_state" domain="[('payment_state','=','not_paid')]"/>-->
+
+                <group expand="0" string="Group By">
+                    <filter string="Delivery Boy" name="delivery_boy" context="{'group_by':'delivery_boy'}"/>
+                    <filter string="Delivery Status" name="delivery_state" context="{'group_by':'delivery_state'}"/>
+                    <filter string="Payment Status" name="payment_state" context="{'group_by':'payment_state'}"/>
+                    <filter string="Due Date" name="due_date" context="{'group_by':'due_date'}"/>
+                </group>
             </search>
         </field>
     </record>
+
+
 </odoo>

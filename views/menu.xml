@@ -22,12 +22,23 @@
               action="action_delivery_management" groups="delivery_management.group_delivery_admin" sequence="700"/>
     <menuitem id="delivery_commission_orders" name="Commission Orders" parent="delivery_management_invoices"
               action="action_delivery_management" groups="delivery_management.group_delivery_admin" sequence="800"/>
-    <menuitem id="delivery_management_boy" name="Delivery Boy" parent="delivery_management" action="action_delivery_boy"
+    <menuitem id="menu_delivery_boy_bills"
+              name="Delivery Boy Bills"
+              parent="delivery_management_invoices"
+              action="action_delivery_boy_bill_list"
+              groups="delivery_management.group_delivery_admin"
+              sequence="900"/>
+    <menuitem id="delivery_management_boy_list" name="Delivery Boy" parent="delivery_management" action="action_delivery_boy"
               groups="delivery_management.group_delivery_admin" sequence="20"/>
-<!--    <menuitem id="menu_delivery_boy_bill"-->
-<!--              name="Create Delivery Boy Bill"-->
-<!--              parent="delivery_management"-->
-<!--              action="action_vendor_bill_wizard"-->
-<!--              groups="delivery_management.group_delivery_admin"-->
-<!--              sequence="30"/>-->
+    <!--    <menuitem id="menu_delivery_boy_bills"-->
+    <!--              name="Delivery Boy Bills"-->
+    <!--              parent="delivery_management_boy"-->
+    <!--              action="action_delivery_boy_bill"-->
+    <!--              sequence="20"/>-->
+    <!--    <menuitem id="menu_delivery_boy_bill"-->
+    <!--              name="Create Delivery Boy Bill"-->
+    <!--              parent="delivery_management"-->
+    <!--              action="action_vendor_bill_wizard"-->
+    <!--              groups="delivery_management.group_delivery_admin"-->
+    <!--              sequence="30"/>-->
 </odoo>

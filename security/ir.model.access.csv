@@ -4,3 +4,5 @@ access_delivery_boy,access_delivery_boy,model_delivery_boy,,1,1,1,1
 access_assign_delivery_wizard,access_assign_delivery_wizard,model_assign_delivery_wizard,,1,1,1,1
 access_delivery_management_line,access_delivery_management_line,model_delivery_management_line,,1,1,1,1
 access_commision_bill,access_commision_bill,model_commision_bill,,1,1,1,1
+access_delivery_boy_bill,access_delivery_boy_bill,model_delivery_boy_bill,,1,1,1,1
+access_delivery_boy_bill_line,access_delivery_boy_bill_line,model_delivery_boy_bill_line,,1,1,1,1

@@ -24,10 +24,10 @@
               action="action_delivery_management" groups="delivery_management.group_delivery_admin" sequence="800"/>
     <menuitem id="delivery_management_boy" name="Delivery Boy" parent="delivery_management" action="action_delivery_boy"
               groups="delivery_management.group_delivery_admin" sequence="20"/>
-    <menuitem id="menu_delivery_boy_bill"
-              name="Create Delivery Boy Bill"
-              parent="delivery_management"
-              action="action_vendor_bill_wizard"
-              groups="delivery_management.group_delivery_admin"
-              sequence="30"/>
+<!--    <menuitem id="menu_delivery_boy_bill"-->
+<!--              name="Create Delivery Boy Bill"-->
+<!--              parent="delivery_management"-->
+<!--              action="action_vendor_bill_wizard"-->
+<!--              groups="delivery_management.group_delivery_admin"-->
+<!--              sequence="30"/>-->
 </odoo>

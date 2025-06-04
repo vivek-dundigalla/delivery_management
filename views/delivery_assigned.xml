@@ -59,24 +59,10 @@
                                        decoration-success="payment_state == 'paid'"
                                        decoration-warning="payment_state in ('partial', 'in_progress')"
                                        decoration-danger="payment_state == 'not_paid'"/>
-                                <!--                                <field name="payment_state" widget="badge" readonly="1"/>-->
                             </group>
                         </group>
-                        <!--                        <group>-->
-                        <!--                            &lt;!&ndash;                            <field name="next_activity"/>&ndash;&gt;-->
-                        <!--                            <field name="tax_excluded" widget="monetary"-->
-                        <!--                                   options="{'currency_field': 'currency_id'}"-->
-                        <!--                                   readonly="1"/>-->
-                        <!--                            <field name="total" widget="monetary"-->
-                        <!--                                   options="{'currency_field': 'currency_id'}"-->
-                        <!--                                   readonly="1"/>-->
-                        <!--                            <field name="total_in_currency_display" readonly="1"/>-->
-                        <!--                            <field name="delivery_boy"/>-->
-                        <!--                            <field name="order_amount_due" readonly="1"/>-->
-                        <!--                            <field name="status" readonly="1"/>-->
-                        <!--                        </group>-->
-
                     </group>
+
                     <notebook>
                         <page string="Order Lines" create="False" readonly="1">
                             <field name="order_line_ids" create="false" readonly="1"
@@ -108,6 +94,11 @@
                                                modifiers='{"class": [["amount_residual", "!=", 0, "text-danger"]]}'/>
                                         <button name="action_collect_delivery"
                                                 string="Collect Payment"
+                                                type="object"
+                                                class="btn btn-danger"
+                                        />
+                                        <button name="action_denied_delivery"
+                                                string="Payment Denied"
                                                 type="object"
                                                 class="btn btn-danger"
                                         />

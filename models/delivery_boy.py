@@ -42,8 +42,6 @@ class DeliveryBoy(models.Model):
     ], string="Transportation",)
     commission_fee = fields.Float(string="Commission Fees")
 
-    # def send_email(self):
-    #     pass
 
     def dummy_method_groups(self):
         pass

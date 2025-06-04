@@ -34,7 +34,6 @@
         </field>
     </record>
 
-    <!-- Form View for Delivery Boy Bills -->
     <record id="view_delivery_boy_bill_form" model="ir.ui.view">
         <field name="name">delivery.boy.bill.form</field>
         <field name="model">delivery.boy.bill</field>
@@ -93,12 +92,10 @@
         </field>
     </record>
 
-    <!-- Action Window for Delivery Boy Bills -->
     <record id="action_delivery_boy_bill_list" model="ir.actions.act_window">
         <field name="name">Delivery Boy Bills</field>
         <field name="res_model">delivery.boy.bill</field>
         <field name="view_mode">list,form</field>
-        <!--        <field name="view_id" ref="view_delivery_boy_bill_list"/>-->
         <field name="target">current</field>
     </record>
 

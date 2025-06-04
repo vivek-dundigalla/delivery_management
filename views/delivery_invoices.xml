@@ -1,31 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <!--        <record id="view_delivery_management_form" model="ir.ui.view">-->
-    <!--            <field name="name">delivery</field>-->
-    <!--            <field name="model">delivery.management</field>-->
-    <!--            <field name="arch" type="xml">-->
-    <!--                <form string="Delivery">-->
-    <!--                    <sheet>-->
-    <!--                        <group>-->
-    <!--                            <field name="number"/>-->
-    <!--                            <field name="due_date"/>-->
-    <!--                            <field name="next_activity"/>-->
-    <!--                            &lt;!&ndash;                    <field name="tax_excluded"/>&ndash;&gt;-->
-    <!--                            &lt;!&ndash;                    <field name="total"/>&ndash;&gt;-->
-    <!--                            <field name="tax_excluded" sum="Total Tax Excluded"/>-->
-    <!--                            <field name="total" sum="Total Amount"/>-->
-    <!--                            <field name="total_in_currency"/>-->
-    <!--                            <field name="delivery_boy"/>-->
-    <!--                            <field name="order_amount_due"/>-->
-    <!--                            <field name="delivery_state" widget="badge"/>-->
-    <!--                            <field name="payment_state" widget="badge"/>-->
-    <!--                            <field name="status"/>-->
-    <!--                        </group>-->
-    <!--                    </sheet>-->
-    <!--                </form>-->
-    <!--            </field>-->
-    <!--        </record>-->
-
 
     <record id="view_delivery_management_list" model="ir.ui.view">
         <field name="name">Delivery invoices</field>
@@ -45,10 +19,10 @@
                         string="+"
                         type="action"
                         class="btn-primary"/>
-                <!--                to add color to the button add "class="btn-primary custom-delivery-button"-->
                 <field name="order_amount_due" widget="monetary" options="{'currency_field': 'currency_id'}"/>
                 <field name="delivery_state" widget="badge"
-                       decoration-info="delivery_state in ('draft', 'transit')"
+                       decoration-info="delivery_state == 'draft'"
+                       decoration-warning="delivery_state == 'transit'"
                        decoration-primary="delivery_state in ('onway','collection')"
                        decoration-success="delivery_state == 'arrived'"
                        decoration-danger="delivery_state == 'cancel_delivery'"/>
@@ -59,8 +33,9 @@
                 ></button>
                 <field name="payment_state" widget="badge"
                        decoration-success="payment_state == 'paid'"
-                       decoration-warning="payment_state in ('partial', 'in_progress')"
-                       decoration-danger="payment_state == 'not_paid'"/>
+                       decoration-warning="payment_state == 'not_paid'"
+                       decoration-danger="payment_state == 'denied'"
+                />
                 <field name="status" widget="badge"/>
             </list>
         </field>
@@ -101,7 +76,6 @@
         <field name="domain">[('delivery_state', 'in', ('transit', 'onway', 'collection', 'cancel_delivery',
             'arrived'))]
         </field>
-        <!--        <field name="domain">[('delivery_state', '=', 'transit')]</field>-->
     </record>
 
     <record id="action_delivery_onway" model="ir.actions.act_window">
@@ -140,7 +114,6 @@
                 <field name="payment_state"/>
                 <field name="status"/>
                 <separator/>
-                <!-- Delivery Satatus Filters-->
                 <filter string="Invoice" name="delivery_state" domain="[('delivery_state','=','draft')]"/>
                 <filter string="Delivery Assigned" name="delivery_state" domain="[('delivery_state','=','transit')]"/>
                 <filter string="Delivery Onway" name="delivery_state" domain="[('delivery_state','=','onway')]"/>
@@ -152,9 +125,8 @@
                         domain="[('delivery_state','=','cancel_delivery')]"/>
                 <separator/>
 
-                <!--Payment Status-->
-                <!--                <filter string="Paid" name="payment_state" domain="[('payment_state','=','paid')]"/>-->
-                <!--                <filter string="Not Paid" name="payment_state" domain="[('payment_state','=','not_paid')]"/>-->
+                <filter string="Paid" name="payment_state" domain="[('payment_state','=','paid')]"/>
+                <filter string="Not Paid" name="payment_state" domain="[('payment_state','=','not_paid')]"/>
 
                 <group expand="0" string="Group By">
                     <filter string="Delivery Boy" name="delivery_boy" context="{'group_by':'delivery_boy'}"/>
@@ -165,6 +137,4 @@
             </search>
         </field>
     </record>
-
-
 </odoo>

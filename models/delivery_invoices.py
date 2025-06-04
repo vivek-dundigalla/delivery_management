@@ -60,11 +60,10 @@ class DeliveryOrder(models.Model):
     )
 
     payment_state = fields.Selection([
-        ('not_paid', 'Not Paid'),
-        # ('partial', 'Partial'),
-        # ('in_progress', 'In progress'),
+        ('not_paid', 'Cash On Delivery'),
         ('paid', 'Paid'),
-    ], string="Payment State", related='invoice_id.payment_state', store=True, readonly=True)
+        ('denied', 'Not Paid'),
+    ], string="Payment State", compute='_compute_payment_state', store=True, readonly=True)
 
     status = fields.Selection([
         ('draft', 'Draft'),
@@ -76,7 +75,26 @@ class DeliveryOrder(models.Model):
     amount_residual = fields.Monetary(string="Due Amount", currency_field='currency_id',
                                       compute='_compute_amount_residual', store=False)
 
+    is_denied = fields.Boolean(string="Manually Denied", default=False)
 
+    @api.depends('invoice_id.payment_state', 'is_denied')
+    def _compute_payment_state(self):
+        for record in self:
+            if record.is_denied:
+                record.payment_state = 'denied'
+            elif record.invoice_id:
+                if record.invoice_id.payment_state == 'paid':
+                    record.payment_state = 'paid'
+                else:
+                    record.payment_state = 'not_paid'
+            else:
+                record.payment_state = 'not_paid'
+
+    def action_denied_delivery(self):
+        for record in self:
+            record.is_denied = True
+            record.delivery_state = 'cancel_delivery'
+            record._compute_payment_state()
 
     @api.depends('number')
     def _compute_invoice(self):
@@ -98,10 +116,8 @@ class DeliveryOrder(models.Model):
         for record in self:
             if record.amount_residual != 0:
                 record.delivery_state = 'collection'
-                # Change payment state to 'paid'
                 record.payment_state = 'paid'
 
-                # Update the linked invoice's payment_state to 'paid' as well
                 invoice = self.env['account.move'].search([('name', '=', record.number)], limit=1)
                 if invoice:
                     invoice.payment_state = 'paid'
@@ -188,7 +204,6 @@ class AccountMove(models.Model):
             'customer_name': move.partner_id.id or '',
             'customer_mobile': move.partner_id.mobile or '',
             'customer_address': move.partner_id.street or '',
-            # 'customer_address': self._get_complete_address(move.partner_id),
             'customer_address1': move.partner_id.street2 or '',
             'customer_address2': move.partner_id.zip or '',
             'customer_address3': move.partner_id.city or '',
@@ -248,19 +263,6 @@ class AccountMove(models.Model):
             if move.move_type == 'out_invoice':
                 self._update_delivery_management_record(move)
         return res
-
-    # def _get_complete_address(self, partner):
-    #     address_parts = [
-    #         partner.street or '',
-    #         partner.street2 or '',
-    #         partner.city or '',
-    #         partner.zip or '',
-    #         partner.state_id.name or '',
-    #         partner.country_id.name or ''
-    #     ]
-    #     complete_address = ', '.join(filter(None, address_parts))
-    #     print("### Full address:", complete_address)
-    #     return complete_address
 
     def _get_relative_date(self, due_date):
         if not due_date:

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <data>
-        <!-- Security group for Delivery Boy -->
         <record id="module_delivery_category" model="ir.module.category">
             <field name="name">Delivery</field>
             <field name="sequence">1</field>

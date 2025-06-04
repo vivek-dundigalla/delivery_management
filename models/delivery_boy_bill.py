@@ -34,28 +34,24 @@ class DeliveryBoyBill(models.Model):
         res = super().default_get(fields_list)
 
         active_ids = self.env.context.get('active_ids', [])
-        quantity = len(active_ids)  # Number of selected invoices
+        quantity = len(active_ids)
 
         bill_number = self.env['ir.sequence'].next_by_code('delivery.boy.bill')
         if bill_number:
             res['name'] = bill_number
 
-        # Search for "Service" product
         service_product = self.env['product.product'].search([('name', '=', 'Service')], limit=1)
         if not service_product:
             raise ValidationError("Product named 'Service' not found. Please create it first.")
 
-        # Get the first delivery boy from the delivery orders
         delivery_orders = self.env['delivery.management'].browse(active_ids)
         first_delivery_boy = delivery_orders[0].delivery_boy if delivery_orders else False
         commission_fee = first_delivery_boy.commission_fee if first_delivery_boy else 0.0
         commission_fees = commission_fee * 100  # convert to percentage
 
-        # Calculate total and commission amount
         total_in_currency_display = sum(order.total_in_currency_display for order in delivery_orders)
         commission_amount = (total_in_currency_display * (commission_fees / 100)) if total_in_currency_display else 0.0
 
-        # Prepare the default line values
         line_vals = [(0, 0, {
             'product_id': service_product.id,
             'name': 'Service',
@@ -64,7 +60,6 @@ class DeliveryBoyBill(models.Model):
             'price_subtotal': commission_amount,
         })]
 
-        # Set the default values in the form
         res.update({
             'delivery_boy_name': first_delivery_boy.name if first_delivery_boy else '',
             'commission_fees': commission_fees,

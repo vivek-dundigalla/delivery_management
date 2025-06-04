@@ -25,8 +25,6 @@
             "wizard/assign_delivery_wizard.xml",
             "wizard/commision_bill.xml",
             "wizard/view_delivery_boy_bill.xml",
-            "views/delivery_dashboard.xml",
-            # "report/report.xml",
             "report/report_templates.xml",
             "views/delivery_assigned.xml",
             "views/delivery_boy_bill_views.xml",
@@ -34,5 +32,4 @@
             "views/delivery_invoices.xml",
             "views/menu.xml",
         ]
-
 }

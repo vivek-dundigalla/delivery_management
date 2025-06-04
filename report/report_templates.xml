@@ -6,11 +6,7 @@
             <t t-call="web.external_layout">
                 <t t-set="doc" t-value="docs[0]"/>
                 <t t-foreach="docs" t-as="doc">
-                    <!--                <t t-set="doc" t-value="doc[0]">-->
                     <div class="page" style="margin-top:100px;">
-                        <!-- Header Section -->
-                        <!--                        <h2 style="margin-top: 150px;">Delivery Boy Bill</h2>-->
-<!--                        <hr style="border: none; height: 3px; background-color: black; margin-top: 120px; margin-bottom: 20px;"/>-->
 
                         <h2 style="text-align: center;">Delivery Boy Bill</h2>
                         <p>
@@ -34,7 +30,6 @@
                             <t t-esc="doc.commission_amount"/>
                         </p>
 
-                        <!-- Line Items Table -->
                         <table class="table table-sm mt32">
                             <thead>
                                 <tr>
@@ -76,11 +71,9 @@
                     </div>
                 </t>
             </t>
-            <!--        </t>-->
         </main>
     </template>
 
-    <!-- Report action -->
     <record id="delivery_bill_report_action" model="ir.actions.report">
         <field name="name">Delivery Bill Report</field>
         <field name="model">delivery.boy.bill</field>

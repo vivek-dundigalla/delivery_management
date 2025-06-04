@@ -28,11 +28,6 @@
                     <group>
                         <group>
                             <group>
-<!--                                <button name="action_print_pdf"-->
-<!--                                        string="Print"-->
-<!--                                        type="object"-->
-<!--                                        class="btn-primary"/>-->
-<!--                                <field name="name" readonly="1"/>-->
                                 <field name="delivery_boy_name" readonly="1"/>
                             </group>
                         </group>
@@ -49,7 +44,6 @@
                                 <list editable="bottom" create="false" delete="false">
                                     <field name="product_id" string="Product" readonly="1"/>
                                     <field name="name" string="Label" readonly="1"/>
-                                    <!--                                    <field name="account_id" string="Account" invisible="1" readonly="1" />-->
                                     <field name="quantity" string="Quantity" readonly="1"/>
                                     <field name="commission_fees" string="Commission Fee(%)" readonly="1"/>
                                     <field name="price_subtotal" string="Subtotal" readonly="1"/>

@@ -5,6 +5,7 @@ from odoo.exceptions import UserError, ValidationError
 class DeliveryBoyBill(models.Model):
     _name = 'delivery.boy.bill'
     _description = 'Delivery Boy Bill'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
 
     name = fields.Char(string="Bill Number")
     delivery_boy_name = fields.Char(string="Delivery Boy Name")
@@ -24,6 +25,9 @@ class DeliveryBoyBill(models.Model):
         if not vals.get('name'):
             vals['name'] = self.env['ir.sequence'].next_by_code('delivery.boy.bill') or 'New'
         return super().create(vals)
+
+    def print_bill_report(self):
+        return self.env.ref('delivery_management.delivery_bill_report_action').report_action(self)
 
     @api.model
     def default_get(self, fields_list):
@@ -90,4 +94,3 @@ class DeliveryBoyBillLine(models.Model):
         'res.currency', string='Currency',
         default=lambda self: self.env.company.currency_id.id,
         readonly=True)
-

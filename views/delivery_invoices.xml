@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <!--    <record id="view_delivery_management_form" model="ir.ui.view">-->
-    <!--        <field name="name">delivery</field>-->
-    <!--        <field name="model">delivery.management</field>-->
-    <!--        <field name="arch" type="xml">-->
-    <!--            <form string="Delivery">-->
-    <!--                <sheet>-->
-    <!--                    <group>-->
-    <!--                        <field name="number"/>-->
-    <!--                        <field name="due_date"/>-->
-    <!--                        <field name="next_activity"/>-->
-    <!--                        &lt;!&ndash;                    <field name="tax_excluded"/>&ndash;&gt;-->
-    <!--                        &lt;!&ndash;                    <field name="total"/>&ndash;&gt;-->
-    <!--                        <field name="tax_excluded" sum="Total Tax Excluded"/>-->
-    <!--                        <field name="total" sum="Total Amount"/>-->
-    <!--                        <field name="total_in_currency"/>-->
-    <!--                        <field name="delivery_boy"/>-->
-    <!--                        <field name="order_amount_due"/>-->
-    <!--                        <field name="delivery_state" widget="badge"/>-->
-    <!--                        <field name="payment_state" widget="badge"/>-->
-    <!--                        <field name="status"/>-->
-    <!--                    </group>-->
-    <!--                </sheet>-->
-    <!--            </form>-->
-    <!--        </field>-->
-    <!--    </record>-->
+    <!--        <record id="view_delivery_management_form" model="ir.ui.view">-->
+    <!--            <field name="name">delivery</field>-->
+    <!--            <field name="model">delivery.management</field>-->
+    <!--            <field name="arch" type="xml">-->
+    <!--                <form string="Delivery">-->
+    <!--                    <sheet>-->
+    <!--                        <group>-->
+    <!--                            <field name="number"/>-->
+    <!--                            <field name="due_date"/>-->
+    <!--                            <field name="next_activity"/>-->
+    <!--                            &lt;!&ndash;                    <field name="tax_excluded"/>&ndash;&gt;-->
+    <!--                            &lt;!&ndash;                    <field name="total"/>&ndash;&gt;-->
+    <!--                            <field name="tax_excluded" sum="Total Tax Excluded"/>-->
+    <!--                            <field name="total" sum="Total Amount"/>-->
+    <!--                            <field name="total_in_currency"/>-->
+    <!--                            <field name="delivery_boy"/>-->
+    <!--                            <field name="order_amount_due"/>-->
+    <!--                            <field name="delivery_state" widget="badge"/>-->
+    <!--                            <field name="payment_state" widget="badge"/>-->
+    <!--                            <field name="status"/>-->
+    <!--                        </group>-->
+    <!--                    </sheet>-->
+    <!--                </form>-->
+    <!--            </field>-->
+    <!--        </record>-->
 
 
     <record id="view_delivery_management_list" model="ir.ui.view">
@@ -80,7 +80,7 @@
         <field name="res_model">delivery.management</field>
         <field name="view_mode">list,form</field>
         <field name="view_id" ref="delivery_management.view_delivery_management_list"/>
-        <field name="domain">[('payment_state', '=', 'paid')]</field>
+        <field name="domain">[('payment_state', '!=', 'not_paid')]</field>
     </record>
 
     <record id="action_delivery_cancelled" model="ir.actions.act_window">

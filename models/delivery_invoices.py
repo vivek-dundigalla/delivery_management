@@ -51,12 +51,20 @@ class DeliveryOrder(models.Model):
         ('cancel_delivery', 'Cancel Delivery'),
     ], default='draft', string="Delivery Status")
 
+    invoice_id = fields.Many2one(
+        'account.move',
+        string='Invoice',
+        compute='_compute_invoice',
+        store=True,
+        readonly=True
+    )
+
     payment_state = fields.Selection([
         ('not_paid', 'Not Paid'),
-        ('partial', 'Partial'),
-        ('in_progress', 'In progress'),
+        # ('partial', 'Partial'),
+        # ('in_progress', 'In progress'),
         ('paid', 'Paid'),
-    ], string="Payment State", compute="update_payment_state", store=False)
+    ], string="Payment State", related='invoice_id.payment_state', store=True, readonly=True)
 
     status = fields.Selection([
         ('draft', 'Draft'),
@@ -68,20 +76,13 @@ class DeliveryOrder(models.Model):
     amount_residual = fields.Monetary(string="Due Amount", currency_field='currency_id',
                                       compute='_compute_amount_residual', store=False)
 
-    def action_open_vendor_bill_wizard(self):
-        return {
-            'type': 'ir.actions.act_window',
-            'name': 'Vendor Bill Info',
-            'res_model': 'commision.bill',
-            'view_mode': 'form',
-            'target': 'new',
-            'context': {
-                'default_name': self.name,
-                'default_amount_total': self.amount_total,
-                'default_commission_fees': 10.0,  # Or compute dynamically if needed
-                'default_commission_amount': self.amount_total * 0.10 if self.amount_total else 0.0,
-            }
-        }
+
+
+    @api.depends('number')
+    def _compute_invoice(self):
+        for record in self:
+            invoice = self.env['account.move'].search([('name', '=', record.number)], limit=1)
+            record.invoice_id = invoice.id if invoice else False
 
     def action_delivery_arrived(self):
         for record in self:
@@ -104,6 +105,8 @@ class DeliveryOrder(models.Model):
                 invoice = self.env['account.move'].search([('name', '=', record.number)], limit=1)
                 if invoice:
                     invoice.payment_state = 'paid'
+                    invoice.write({'amount_residual': 0.0})
+
             else:
                 raise UserError("Amount already Paid; nothing to collect.")
 
@@ -196,11 +199,8 @@ class AccountMove(models.Model):
         }
 
         if move.delivery_management:
-            # Remove old order lines to avoid duplicate lines
             move.delivery_management.order_line_ids.unlink()
-            # Update main fields
             move.delivery_management.write(delivery_data)
-            # Create new order lines
             for line in move.invoice_line_ids:
                 self.env['delivery.management.line'].create({
                     'delivery_id': move.delivery_management.id,
@@ -212,7 +212,6 @@ class AccountMove(models.Model):
                     'price_subtotal': line.price_subtotal,
                 })
         else:
-            # Add order lines in create
             delivery_data['order_line_ids'] = [
                 (0, 0, {
                     'product_id': line.product_id.id,
@@ -250,18 +249,18 @@ class AccountMove(models.Model):
                 self._update_delivery_management_record(move)
         return res
 
-    def _get_complete_address(self, partner):
-        address_parts = [
-            partner.street or '',
-            partner.street2 or '',
-            partner.city or '',
-            partner.zip or '',
-            partner.state_id.name or '',
-            partner.country_id.name or ''
-        ]
-        complete_address = ', '.join(filter(None, address_parts))
-        print("### Full address:", complete_address)
-        return complete_address
+    # def _get_complete_address(self, partner):
+    #     address_parts = [
+    #         partner.street or '',
+    #         partner.street2 or '',
+    #         partner.city or '',
+    #         partner.zip or '',
+    #         partner.state_id.name or '',
+    #         partner.country_id.name or ''
+    #     ]
+    #     complete_address = ', '.join(filter(None, address_parts))
+    #     print("### Full address:", complete_address)
+    #     return complete_address
 
     def _get_relative_date(self, due_date):
         if not due_date:

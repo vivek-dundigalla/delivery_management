@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- QWeb template -->
+    <template id="report_delivery_bill_template" name="Delivery Bill Template">
+        <main>
+            <t t-call="web.external_layout">
+                <t t-set="doc" t-value="docs[0]"/>
+                <t t-foreach="docs" t-as="doc">
+                    <!--                <t t-set="doc" t-value="doc[0]">-->
+                    <div class="page" style="margin-top:100px;">
+                        <!-- Header Section -->
+                        <!--                        <h2 style="margin-top: 150px;">Delivery Boy Bill</h2>-->
+<!--                        <hr style="border: none; height: 3px; background-color: black; margin-top: 120px; margin-bottom: 20px;"/>-->
+
+                        <h2 style="text-align: center;">Delivery Boy Bill</h2>
+                        <p>
+                            <strong>Bill Number:</strong>
+                            <t t-esc="doc.name"/>
+                        </p>
+                        <p>
+                            <strong>Bill Date:</strong>
+                            <t t-esc="doc.bill_date"/>
+                        </p>
+                        <p>
+                            <strong>Delivery Boy Name:</strong>
+                            <t t-esc="doc.delivery_boy_name"/>
+                        </p>
+                        <p>
+                            <strong>Commission Fees (%):</strong>
+                            <t t-esc="doc.commission_fees"/>
+                        </p>
+                        <p>
+                            <strong>Commission Amount:</strong>
+                            <t t-esc="doc.commission_amount"/>
+                        </p>
+
+                        <!-- Line Items Table -->
+                        <table class="table table-sm mt32">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Label</th>
+                                    <th class="text-right">Quantity</th>
+                                    <th class="text-right">Commission (%)</th>
+                                    <th class="text-right">Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="doc.line_ids" t-as="line">
+                                    <tr>
+                                        <td>
+                                            <t t-esc="line.product_id.name"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="line.name"/>
+                                        </td>
+                                        <td class="text-right">
+                                            <t t-esc="line.quantity"/>
+                                        </td>
+                                        <td class="text-right">
+                                            <t t-esc="line.commission_fees"/>
+                                        </td>
+                                        <td class="text-right">
+                                            <t t-esc="line.price_subtotal"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+
+                        <div class="text-right mt32">
+                            <h4>Total:
+                                <t t-esc="doc.amount_total"/>
+                            </h4>
+                        </div>
+                    </div>
+                </t>
+            </t>
+            <!--        </t>-->
+        </main>
+    </template>
+
+    <!-- Report action -->
+    <record id="delivery_bill_report_action" model="ir.actions.report">
+        <field name="name">Delivery Bill Report</field>
+        <field name="model">delivery.boy.bill</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">delivery_management.report_delivery_bill_template</field>
+        <field name="report_file">delivery_management.report_delivery_bill_template</field>
+        <field name="binding_model_id" ref="delivery_management.model_delivery_boy_bill"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

@@ -9,7 +9,7 @@
         Module to manage delivery orders linked to invoices.
     """,
     'category': 'Sales/Delivery',
-    "depends": ['base', 'account','sale','board','product'],
+    "depends": ['base', 'account','sale','sale_management','board','product'],
 
     'assets': {
         'web.assets_backend': [
